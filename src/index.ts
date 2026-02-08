@@ -48,6 +48,10 @@ export default {
 		let newHeaders = new Headers(response.headers);
 
 		const tlsVersion = request.cf.tlsVersion;
+		// WebSocket requests should bypass security headers
+		if (request.headers.get("upgrade") === "websocket") {
+		    return fetch(request);
+		}
 		console.log(tlsVersion);
 		// This sets the headers for HTML responses:
 		if (
